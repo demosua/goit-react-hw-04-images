@@ -57,14 +57,10 @@ class App extends Component {
     return (
       <Container>
         <Searchbar onSubmit={this.handleSubmit} />
-        {status === 'pending' && <Loader />}
         {status === 'rejected' && <ToastContainer autoClose={1000} />}
-        {status === 'resolved' &&
-          <>
-          <ImageGallery images={images} />
-          <Button onClick={this.handleLoadMore} />
-          </>
-        }
+        {images.length > 0 && <ImageGallery images={images} />}
+        {status === 'pending' && <Loader />}
+        {images.length > 0 && <Button onClick={this.handleLoadMore} />}
       </Container>
       )
   }

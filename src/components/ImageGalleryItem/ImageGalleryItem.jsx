@@ -1,36 +1,24 @@
-import React, { PureComponent } from "react";
+import { useState } from "react";
 import { GalleryItem, Image } from './ImageGalleryItem.styled'
 import Modal from '../Modal';
 import PropTypes from 'prop-types';
 
+const ImageGalleryItem = ({ id, webformatURL, largeImageURL }) => {
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
-export class ImageGalleryItem extends PureComponent {
-  state = {
-    isModalOpen: false,
-  };
-
+  const openModal = () => {setModalIsOpen(true)};
+  const closeModal = () => {setModalIsOpen(false)};
   
-
-  openModal = () => {this.setState({ isModalOpen: true })};
-  closeModal = () => {this.setState({ isModalOpen: false })};
-
-  handleModal = () => {
-    this.setState(prevState => ({isModalOpen: !prevState.isModalOpen}))
-  };
-
-  render() {
-    const { id, webformatURL, largeImageURL } = this.props;
-    const { isModalOpen } = this.state;
-    return (
-      <>
-        <GalleryItem onClick={this.openModal}>
-          <Image src={webformatURL} alt={id} />
-        </GalleryItem>
-        {isModalOpen && (<Modal id={id} largeImageURL={largeImageURL} onClose={this.handleModal}/>) }
-      </>
-    );
-  }
+  return (
+    <>
+      <GalleryItem onClick={openModal}>
+        <Image src={webformatURL} alt={id} />
+      </GalleryItem>
+      {modalIsOpen && (<Modal id={id} largeImageURL={largeImageURL} onClose={closeModal}/>) }
+    </>
+  );
 }
+
 export default ImageGalleryItem;
 
 ImageGalleryItem.propTypes = {
