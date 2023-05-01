@@ -6,6 +6,7 @@ import Loader from '../Loader'
 import { Container } from './App.styled';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import * as Scroll from 'react-scroll';
 import api from '../../api/pixabay';
 
 const App = () => {
@@ -14,6 +15,11 @@ const App = () => {
   const [images, setImages] = useState([]);
   const [status, setStatus] = useState('idle');
 
+  const scrolling = () => {
+    const scroll = Scroll.animateScroll;
+    scroll.scrollMore(650);
+  }
+  
   const handleSubmit = query => {
     setQuery(query);
     setPage(1);
@@ -22,9 +28,11 @@ const App = () => {
 
   const handleLoadMore = () => {
     setPage(prevState => (prevState + 1));
+    scrolling();
   }
 
   useEffect(() => {
+    
     if (query) {
       setStatus('pending');
       api        
@@ -38,6 +46,7 @@ const App = () => {
           toast.error(error.message)
         })
     }
+    
   }, [query, page]);
   
   return (
