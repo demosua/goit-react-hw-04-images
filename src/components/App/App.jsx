@@ -55,7 +55,7 @@ const App = () => {
       {status === 'rejected' && <ToastContainer autoClose={1000} />}
       {images.length > 0 && <ImageGallery images={images} />}
       {status === 'pending' && <Loader />}
-      {images.length > 0 && <Button onClick={handleLoadMore} />}
+      {status !== 'pending' && images.length > 0 && <Button onClick={handleLoadMore} />}
     </Container>
     )
 }
